@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -9,17 +10,19 @@ class LoginPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Login'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          const Text('Login'),
-          ElevatedButton(
-            child: const Text('Login'),
-            onPressed: () {
-              Navigator.pushNamed(context, '/home');
-            },
-          ),
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('login'.tr),
+            ElevatedButton(
+              child: Text('login'.tr),
+              onPressed: () {
+                Navigator.pushNamed(context, '/home');
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

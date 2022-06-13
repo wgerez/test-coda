@@ -1,4 +1,6 @@
-class Pages {
-  static const String loginPage = '/login';
-  static const String listUsers = '/users';
+part of './route.dart';
+
+abstract class Routes {
+  static const loginPage = '/login';
+  static const listUsers = '/users';
 }

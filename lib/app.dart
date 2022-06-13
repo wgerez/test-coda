@@ -12,8 +12,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       getPages: getPages,
-      home: const LoginPage(),
+      initialRoute: Routes.loginPage,
       locale: Get.deviceLocale,
+      debugShowCheckedModeBanner: false,
       title: 'Test Coda',
       theme: ThemeData(
         primarySwatch: Colors.blue,
