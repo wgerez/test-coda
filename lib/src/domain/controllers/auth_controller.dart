@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:test/src/core/system_logger.dart';
 import 'package:test/src/data/models/auth_model.dart';
-import 'package:test/src/data/repository/auth_repository.dart';
+import 'package:test/src/data/repository/auth_repository_impl.dart';
 
 class AuthController extends GetxController {
-  final AuthRepository authRepository;
+  final AuthRepositoryImpl authRepository;
 
   AuthController({required this.authRepository});
 
@@ -16,8 +17,10 @@ class AuthController extends GetxController {
 
   login({required String email, required String password}) async {
     Auth user = Auth(email: email, password: password);
-    authRepository.login(user).then((value) {
-      _authUser.value = value;
-    });
+    final _auth = await authRepository.login(user);
+    _auth.fold(
+      (l) => SystemLogger.error(this, l.toString()),
+      (r) => SystemLogger.verbose(this, r.toString()), //_authUser.value = r,
+    );
   }
 }

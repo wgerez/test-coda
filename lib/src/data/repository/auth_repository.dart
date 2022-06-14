@@ -1,12 +1,7 @@
+import 'package:dartz/dartz.dart';
 import 'package:test/src/data/models/auth_model.dart';
-import 'package:test/src/data/provider/auth_api.dart';
+import 'package:test/src/data/models/login_failure_model.dart';
 
-class AuthRepository {
-  final AuthClient authClient;
-
-  AuthRepository({required this.authClient});
-
-  login(Auth user) {
-    return authClient.login(user: user);
-  }
+abstract class AuthRepository {
+  Future<Either<LoginFailure, AuthModel>> login(Auth user);
 }

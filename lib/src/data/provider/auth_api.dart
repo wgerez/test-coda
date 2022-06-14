@@ -1,30 +1,48 @@
+import 'dart:convert';
+
+import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 import 'package:test/src/core/constants.dart';
 import 'package:test/src/core/system_logger.dart';
 
 import 'package:test/src/data/models/auth_model.dart';
+import 'package:test/src/data/models/login_failure_model.dart';
 
 class AuthClient {
   final http.Client httpClient;
 
   AuthClient({required this.httpClient});
 
-  login({required Auth user}) async {
+  Future<Either<LoginFailure, AuthModel>> login({required Auth user}) async {
     final Map data = {
       'email': user.email,
       'password': user.password,
     };
+    var _failure = LoginFailure(
+      code: -999,
+      message: 'Something went wrong',
+    );
     try {
       final url = Uri.parse(Constants.authUrl);
       final response = await httpClient.post(url, body: data);
+
       if (response.statusCode == 200) {
-        SystemLogger.verbose(this, response.body);
-        return response.body;
+        final data = json.decode(response.body);
+        if (data['success']) {
+          final auth = AuthModel.fromJson(data);
+          return Right(auth);
+        } else {
+          _failure = LoginFailure(
+            code: data['code'],
+            message: data['message'],
+          );
+          return Left(_failure);
+        }
       } else {
-        throw Exception('Failed to load post');
+        return Left(_failure);
       }
     } catch (e) {
-      SystemLogger.verbose(this, e.toString());
+      return Left(_failure);
     }
   }
 }
