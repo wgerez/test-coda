@@ -11,11 +11,12 @@ class AuthClient {
 
   login({required Auth user}) async {
     final Map data = {
-      'email': user.userName,
+      'email': user.email,
       'password': user.password,
     };
     try {
-      final response = await httpClient.post(Constants.baseUrl, body: data);
+      final url = Uri.parse(Constants.authUrl);
+      final response = await httpClient.post(url, body: data);
       if (response.statusCode == 200) {
         SystemLogger.verbose(this, response.body);
         return response.body;

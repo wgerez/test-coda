@@ -97,8 +97,8 @@ class Response {
 }
 
 class Auth {
-  final String userName;
+  final String email;
   final String password;
 
-  Auth(this.userName, this.password);
+  Auth({required this.email, required this.password});
 }
