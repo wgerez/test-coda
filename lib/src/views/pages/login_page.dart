@@ -40,53 +40,63 @@ class LoginPage extends GetView<AuthController> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  width: size.width * 0.6,
-                  child: Image.asset('assets/images/logo.png'),
-                ),
-                Text('login'.tr),
-                TextFormField(
-                  obscureText: true,
-                  controller: controller.emailController,
-                  decoration: const InputDecoration(
-                    suffixIcon: Icon(Icons.remove_red_eye),
-                    labelText: 'Mail',
+            child: Form(
+              key: controller.formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    width: size.width * 0.6,
+                    child: Image.asset('assets/images/logo.png'),
                   ),
-                ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  controller: controller.passwordController,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    suffixIcon: Icon(Icons.remove_red_eye),
-                    labelText: 'Password',
+                  Text('login'.tr),
+                  Obx(
+                    () => TextFormField(
+                      obscureText: controller.isEmailObscure.value,
+                      controller: controller.emailController,
+                      decoration: InputDecoration(
+                        suffixIcon: InkWell(
+                          onTap: () => controller.changeMailObscure(),
+                          child: Icon(controller.isEmailObscure.value
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                        ),
+                        labelText: 'Mail',
+                      ),
+                      validator: controller.validateEmail,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 35),
-                SizedBox(
-                  width: double.infinity,
-                  child: MinimalButton(
-                    text: 'login'.tr,
-                    action: _callLogin(),
+                  const SizedBox(height: 20),
+                  Obx(
+                    () => TextFormField(
+                      controller: controller.passwordController,
+                      obscureText: controller.isPassObscure.value,
+                      decoration: InputDecoration(
+                        suffixIcon: InkWell(
+                          onTap: () => controller.changePassObscure(),
+                          child: Icon(controller.isPassObscure.value
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                        ),
+                        labelText: 'Password',
+                      ),
+                      validator: controller.validatePassword,
+                    ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 35),
+                  SizedBox(
+                    width: double.infinity,
+                    child: MinimalButton(
+                      text: 'login'.tr,
+                      action: controller.callLogin,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ]),
       ),
     );
-  }
-
-  _callLogin() {
-    return () {
-      controller.login(
-        email: controller.emailController.text,
-        password: controller.passwordController.text,
-      );
-    };
   }
 }

@@ -27,13 +27,14 @@ class AuthClient {
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
+        print(data['success']);
         if (data['success']) {
           final auth = AuthModel.fromJson(data);
           return Right(auth);
         } else {
           _failure = LoginFailure(
-            code: data['code'],
-            message: data['message'],
+            code: data['error']['code'],
+            message: data['error']['message'],
           );
           return Left(_failure);
         }
