@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 import 'package:test/src/core/constants.dart';
-import 'package:test/src/core/system_logger.dart';
 
 import 'package:test/src/data/models/auth_model.dart';
 import 'package:test/src/data/models/login_failure_model.dart';

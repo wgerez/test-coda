@@ -4,10 +4,14 @@ class Messages extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         'en_US': {
-          'login': 'Login',
+          'login': 'LOG IN',
+          'email': 'Mail',
+          'password': 'Password',
         },
         'es_AR': {
-          'login': 'Ingresar',
+          'login': 'INGRESAR',
+          'email': 'Mail',
+          'password': 'Contraseña',
         }
       };
 }

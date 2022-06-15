@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Test Coda',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: 'DMSans',
       ),
       translations: Messages(),
     );
