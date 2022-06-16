@@ -55,6 +55,7 @@ class LoginPage extends GetView<AuthController> {
                       obscureText: controller.isEmailObscure.value,
                       controller: controller.emailController,
                       decoration: InputDecoration(
+                        filled: false,
                         suffixIcon: InkWell(
                           onTap: () => controller.changeMailObscure(),
                           child: Icon(controller.isEmailObscure.value
@@ -89,6 +90,7 @@ class LoginPage extends GetView<AuthController> {
                     child: MinimalButton(
                       text: 'login'.tr,
                       action: controller.callLogin,
+                      padding: 15,
                     ),
                   ),
                 ],
