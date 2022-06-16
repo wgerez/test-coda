@@ -2,5 +2,5 @@ part of './route.dart';
 
 abstract class Routes {
   static const loginPage = '/login';
-  static const listUsers = '/users';
+  static const listClients = '/clients';
 }

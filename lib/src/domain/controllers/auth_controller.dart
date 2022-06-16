@@ -1,9 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:test/src/core/system_logger.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:test/src/core/route/route.dart';
 import 'package:test/src/data/models/auth_model.dart';
 import 'package:test/src/data/repository/auth_repository_impl.dart';
+import 'package:test/src/views/pages/pages.dart';
 
 class AuthController extends GetxController {
   final AuthRepositoryImpl authRepository;
@@ -56,7 +57,12 @@ class AuthController extends GetxController {
           ),
         ],
       ),
-      (r) => SystemLogger.verbose(this, r.toString()), //_authUser.value = r,
+      (r) {
+        _authUser.value = r;
+        final box = GetStorage();
+        box.write('token', r.response!.accessToken);
+        Get.toNamed(Routes.listClients);
+      },
     );
   }
 
