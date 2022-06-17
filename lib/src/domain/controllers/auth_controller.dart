@@ -4,7 +4,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:test/src/core/route/route.dart';
 import 'package:test/src/data/models/auth_model.dart';
 import 'package:test/src/data/repository/auth_repository_impl.dart';
-import 'package:test/src/views/pages/pages.dart';
 
 class AuthController extends GetxController {
   final AuthRepositoryImpl authRepository;
