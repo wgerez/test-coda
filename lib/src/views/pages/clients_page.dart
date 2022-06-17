@@ -76,9 +76,7 @@ class ClientsPage extends GetView<ClientController> {
                     () => ListView.builder(
                       itemCount: controller.listClients.length,
                       itemBuilder: (context, item) => ItemClient(
-                        firstName: controller.listClients[item].firstname!,
-                        lastName: controller.listClients[item].lastname!,
-                        email: controller.listClients[item].email!,
+                        client: controller.listClients[item],
                       ),
                     ),
                   ),

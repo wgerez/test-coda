@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:get/get.dart';
 import 'package:test/src/core/system_logger.dart';
+import 'package:test/src/data/models/client_model.dart';
+import 'package:test/src/views/widgets/new_client_widget.dart';
 
 class ItemClient extends StatelessWidget {
   const ItemClient({
     Key? key,
-    required this.firstName,
-    required this.lastName,
-    required this.email,
+    required this.client,
   }) : super(key: key);
-  final String firstName;
-  final String lastName;
-  final String email;
+  final ClientModel client;
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +38,14 @@ class ItemClient extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('$firstName $lastName'),
-                Text(email),
+                Text(
+                  '${client.firstname} ${client.lastname}',
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  client.email!,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ],
             ),
             const Spacer(),
@@ -54,15 +59,13 @@ class ItemClient extends StatelessWidget {
               overlayColor: Colors.black,
               children: [
                 SpeedDialChild(
-                  child: const Icon(Icons.delete),
-                  onTap: () =>
-                      SystemLogger.verbose(this, 'Open Modal para eliminar'),
-                ),
+                    child: const Icon(Icons.delete),
+                    onTap: () =>
+                        SystemLogger.verbose(this, 'Delete client...')),
                 SpeedDialChild(
-                  child: const Icon(Icons.edit),
-                  onTap: () =>
-                      SystemLogger.verbose(this, 'Open Modal para editar'),
-                ),
+                    child: const Icon(Icons.edit),
+                    onTap: () =>
+                        Get.defaultDialog(content: const EditClientWidget())),
               ],
             ),
           ],
