@@ -19,7 +19,6 @@ class EditClientWidget extends GetWidget<ClientController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 20),
           const Padding(
             padding: EdgeInsets.only(left: 35),
             child: Text('Add new client'),
@@ -37,22 +36,28 @@ class EditClientWidget extends GetWidget<ClientController> {
                     children: [
                       Center(
                         child: CircleAvatar(
-                          radius: 35,
+                          radius: 30,
                           backgroundColor: Colors.white,
                           child: Image.asset(
                               'assets/images/profiles/profile1_3x.png'),
                         ),
                       ),
-                      const SizedBox(height: 20),
                       TextFormField(
+                        controller: controller.firstNameController,
                         decoration: const InputDecoration(
-                          labelText: 'FirstName',
+                          labelText: 'First name*',
                         ),
                       ),
-                      const SizedBox(height: 20),
                       TextFormField(
+                        controller: controller.lastNameController,
                         decoration: const InputDecoration(
-                          labelText: 'LastName',
+                          labelText: 'Last name*',
+                        ),
+                      ),
+                      TextFormField(
+                        controller: controller.emailController,
+                        decoration: const InputDecoration(
+                          labelText: 'Email address*',
                         ),
                       ),
                     ],

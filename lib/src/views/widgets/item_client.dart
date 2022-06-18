@@ -3,9 +3,11 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:test/src/core/system_logger.dart';
 import 'package:test/src/data/models/client_model.dart';
-import 'package:test/src/views/widgets/new_client_widget.dart';
+import 'package:test/src/domain/controllers/client_controller.dart';
+import 'package:test/src/views/widgets/minimal_button.dart';
+import 'package:test/src/views/widgets/edit_client_widget.dart';
 
-class ItemClient extends StatelessWidget {
+class ItemClient extends GetWidget<ClientController> {
   const ItemClient({
     Key? key,
     required this.client,
@@ -63,9 +65,32 @@ class ItemClient extends StatelessWidget {
                     onTap: () =>
                         SystemLogger.verbose(this, 'Delete client...')),
                 SpeedDialChild(
-                    child: const Icon(Icons.edit),
-                    onTap: () =>
-                        Get.defaultDialog(content: const EditClientWidget())),
+                  child: const Icon(Icons.edit),
+                  onTap: () async {
+                    controller.firstNameController.text = client.firstname!;
+                    controller.lastNameController.text = client.lastname!;
+                    controller.emailController.text = client.email!;
+
+                    await Get.defaultDialog(
+                      title: '',
+                      titlePadding: const EdgeInsets.all(0),
+                      contentPadding: const EdgeInsets.only(bottom: 5),
+                      content: const EditClientWidget(),
+                      confirm: SizedBox(
+                        width: 150,
+                        child: MinimalButton(
+                            text: 'SAVE', action: () {}, padding: 10),
+                      ),
+                      cancel: TextButton(
+                        onPressed: () => Get.back(),
+                        child: Text(
+                          'Cancel',
+                          style: TextStyle(color: Colors.grey[500]),
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ],

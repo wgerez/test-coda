@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:test/src/core/system_logger.dart';
 import 'package:test/src/data/models/client_model.dart';
@@ -10,6 +11,10 @@ class ClientController extends GetxController {
 
   final listClients = <ClientModel>[].obs;
   RxBool loading = false.obs;
+
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
 
   getAll() async {
     loading(true);
