@@ -11,4 +11,9 @@ class ClientRepositoryImpl implements ClientRepository {
   Future<List<ClientModel>> getAll() {
     return clientClient.getAll();
   }
+
+  @override
+  Future<bool> update(ClientRequestModel client) {
+    return clientClient.update(client);
+  }
 }

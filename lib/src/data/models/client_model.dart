@@ -57,3 +57,44 @@ class ClientModel {
         "deleted": deleted,
       };
 }
+
+class ClientRequestModel {
+  ClientRequestModel({
+    required this.id,
+    required this.firstname,
+    required this.lastname,
+    required this.email,
+    required this.address,
+    required this.photo,
+    required this.caption,
+  });
+
+  String id;
+  String firstname;
+  String lastname;
+  String email;
+  String address;
+  String photo;
+  String caption;
+
+  factory ClientRequestModel.fromJson(Map<String, dynamic> json) =>
+      ClientRequestModel(
+        id: json["id"],
+        firstname: json["firstname"],
+        lastname: json["lastname"],
+        email: json["email"],
+        address: json["address"],
+        photo: json["photo"],
+        caption: json["caption"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "firstname": firstname,
+        "lastname": lastname,
+        "email": email,
+        "address": address,
+        "photo": photo,
+        "caption": caption,
+      };
+}

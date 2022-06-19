@@ -7,7 +7,7 @@ import 'package:test/src/domain/controllers/client_controller.dart';
 import 'package:test/src/views/widgets/minimal_button.dart';
 import 'package:test/src/views/widgets/edit_client_widget.dart';
 
-class ItemClient extends GetWidget<ClientController> {
+class ItemClient extends GetView<ClientController> {
   const ItemClient({
     Key? key,
     required this.client,
@@ -67,6 +67,9 @@ class ItemClient extends GetWidget<ClientController> {
                 SpeedDialChild(
                   child: const Icon(Icons.edit),
                   onTap: () async {
+                    controller.setIdClientUpdate = client.id!.toString();
+                    controller.setAddressClientUpdate = client.address!;
+
                     controller.firstNameController.text = client.firstname!;
                     controller.lastNameController.text = client.lastname!;
                     controller.emailController.text = client.email!;
@@ -79,7 +82,15 @@ class ItemClient extends GetWidget<ClientController> {
                       confirm: SizedBox(
                         width: 150,
                         child: MinimalButton(
-                            text: 'SAVE', action: () {}, padding: 10),
+                          text: 'SAVE',
+                          action: () async {
+                            if (await controller.updateClient()) {
+                              await controller.getAll();
+                            }
+                            Get.back();
+                          },
+                          padding: 10,
+                        ),
                       ),
                       cancel: TextButton(
                         onPressed: () => Get.back(),

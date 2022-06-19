@@ -13,7 +13,7 @@ class AuthClient {
   AuthClient({required this.httpClient});
 
   Future<Either<LoginFailure, AuthModel>> login({required Auth user}) async {
-    final Map data = {
+    final Map<String, String> data = {
       'email': user.email,
       'password': user.password,
     };

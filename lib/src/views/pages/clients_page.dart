@@ -73,11 +73,14 @@ class ClientsPage extends GetView<ClientController> {
                 ),
                 Expanded(
                   child: Obx(
-                    () => ListView.builder(
-                      itemCount: controller.listClients.length,
-                      itemBuilder: (context, item) => ItemClient(
-                        client: controller.listClients[item],
-                      ),
+                    () => ListView(
+                      shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
+                      children: [
+                        ...controller.listClients
+                            .map((cli) => ItemClient(client: cli))
+                            .toList(),
+                      ],
                     ),
                   ),
                 ),

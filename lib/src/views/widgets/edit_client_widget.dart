@@ -21,7 +21,7 @@ class EditClientWidget extends GetWidget<ClientController> {
         children: [
           const Padding(
             padding: EdgeInsets.only(left: 35),
-            child: Text('Add new client'),
+            child: Text('Edit client'),
           ),
           const SizedBox(height: 20),
           Container(
@@ -39,7 +39,8 @@ class EditClientWidget extends GetWidget<ClientController> {
                           radius: 30,
                           backgroundColor: Colors.white,
                           child: Image.asset(
-                              'assets/images/profiles/profile1_3x.png'),
+                            'assets/images/profiles/profile1_3x.png',
+                          ),
                         ),
                       ),
                       TextFormField(
