@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:test/src/domain/controllers/client_controller.dart';
 
-class EditClientWidget extends GetView<ClientController> {
-  const EditClientWidget({Key? key}) : super(key: key);
+class NewClientWidget extends GetView<ClientController> {
+  const NewClientWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class EditClientWidget extends GetView<ClientController> {
         children: [
           const Padding(
             padding: EdgeInsets.only(left: 35),
-            child: Text('Edit client'),
+            child: Text('Add new client'),
           ),
           const SizedBox(height: 10),
           Container(
@@ -31,7 +31,7 @@ class EditClientWidget extends GetView<ClientController> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 15),
               child: Form(
-                key: controller.formUpdateKey,
+                key: controller.formNewKey,
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,21 +46,21 @@ class EditClientWidget extends GetView<ClientController> {
                         ),
                       ),
                       TextFormField(
-                        controller: controller.firstNameController,
+                        controller: controller.newFirstNameController,
                         decoration: const InputDecoration(
                           hintText: 'First name*',
                         ),
                         validator: controller.validateFirstName,
                       ),
                       TextFormField(
-                        controller: controller.lastNameController,
+                        controller: controller.newLastNameController,
                         decoration: const InputDecoration(
                           hintText: 'Last name*',
                         ),
                         validator: controller.validateLastName,
                       ),
                       TextFormField(
-                        controller: controller.emailController,
+                        controller: controller.newEmailController,
                         decoration: const InputDecoration(
                           hintText: 'Email address*',
                         ),

@@ -8,8 +8,11 @@ class ClientController extends GetxController {
 
   ClientController({required this.clientRepository});
 
+  final formUpdateKey = GlobalKey<FormState>();
+  final formNewKey = GlobalKey<FormState>();
   final listClients = <ClientModel>[].obs;
   RxBool loading = false.obs;
+  RxBool loadingUpdate = false.obs;
 
   String idClientUpdate = '';
   String addressClientUpdate = '';
@@ -27,32 +30,74 @@ class ClientController extends GetxController {
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
 
+  TextEditingController newFirstNameController = TextEditingController();
+  TextEditingController newLastNameController = TextEditingController();
+  TextEditingController newEmailController = TextEditingController();
+
   getAll() async {
     loading(true);
     final clients = await clientRepository.getAll();
     listClients.assignAll(clients);
     listClients.refresh();
     loading(false);
-    update();
+  }
+
+  Future<bool> newClient() async {
+    if (formNewKey.currentState!.validate()) {
+      final client = NewClientRequestModel(
+        firstname: newFirstNameController.text,
+        lastname: newLastNameController.text,
+        email: newEmailController.text,
+        address: '',
+        photo: '',
+        caption: '',
+      );
+      return await clientRepository.create(client);
+    }
+    return false;
+  }
+
+  Future<bool> removeClient(int id) async {
+    return await clientRepository.remove(id);
   }
 
   Future<bool> updateClient() async {
-    final client = ClientRequestModel(
-      id: idClientUpdate.toString(),
-      firstname: firstNameController.text,
-      lastname: lastNameController.text,
-      email: emailController.text,
-      address: addressClientUpdate,
-      photo: '',
-      caption: '',
-    );
-    return await clientRepository.update(client);
+    if (formUpdateKey.currentState!.validate()) {
+      loadingUpdate.value = true;
+      update();
+      final client = ClientRequestModel(
+        id: idClientUpdate.toString(),
+        firstname: firstNameController.text,
+        lastname: lastNameController.text,
+        email: emailController.text,
+        address: addressClientUpdate,
+        photo: '',
+        caption: '',
+      );
+      return await clientRepository.update(client);
+    }
+    return false;
   }
 
-  @override
-  void onReady() {
-    getAll();
-    super.onReady();
+  String? validateFirstName(String? firstName) {
+    if (firstName != null && firstName.isEmpty) {
+      return 'First name is required';
+    }
+    return null;
+  }
+
+  String? validateLastName(String? firstName) {
+    if (firstName != null && firstName.isEmpty) {
+      return 'Last name is required';
+    }
+    return null;
+  }
+
+  String? validateEmail(String? mail) {
+    if (mail != null && !GetUtils.isEmail(mail)) {
+      return 'Mail is required';
+    }
+    return null;
   }
 
   @override

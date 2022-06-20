@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:test/src/domain/controllers/client_controller.dart';
 import 'package:test/src/views/widgets/item_client.dart';
+import 'package:test/src/views/widgets/new_client_widget.dart';
 import 'package:test/src/views/widgets/widgets.dart';
 
 class ClientsPage extends GetView<ClientController> {
@@ -66,7 +67,35 @@ class ClientsPage extends GetView<ClientController> {
                     Expanded(
                         child: MinimalButton(
                       text: 'ADD NEW',
-                      action: () {},
+                      action: () async {
+                        await Get.defaultDialog(
+                          barrierDismissible: false,
+                          title: '',
+                          titlePadding: const EdgeInsets.all(0),
+                          contentPadding: const EdgeInsets.only(bottom: 5),
+                          content: const NewClientWidget(),
+                          confirm: SizedBox(
+                            width: 150,
+                            child: MinimalButton(
+                              text: 'SAVE',
+                              action: () async {
+                                if (await controller.newClient()) {
+                                  await controller.getAll();
+                                  Get.back();
+                                }
+                              },
+                              padding: 10,
+                            ),
+                          ),
+                          cancel: TextButton(
+                            onPressed: () => Get.back(),
+                            child: Text(
+                              'Cancel',
+                              style: TextStyle(color: Colors.grey[500]),
+                            ),
+                          ),
+                        );
+                      },
                       padding: 10,
                     ))
                   ],

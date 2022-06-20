@@ -62,8 +62,10 @@ class ItemClient extends GetView<ClientController> {
               children: [
                 SpeedDialChild(
                     child: const Icon(Icons.delete),
-                    onTap: () =>
-                        SystemLogger.verbose(this, 'Delete client...')),
+                    onTap: () async {
+                      await controller.removeClient(client.id!);
+                      await controller.getAll();
+                    }),
                 SpeedDialChild(
                   child: const Icon(Icons.edit),
                   onTap: () async {
@@ -75,6 +77,7 @@ class ItemClient extends GetView<ClientController> {
                     controller.emailController.text = client.email!;
 
                     await Get.defaultDialog(
+                      barrierDismissible: false,
                       title: '',
                       titlePadding: const EdgeInsets.all(0),
                       contentPadding: const EdgeInsets.only(bottom: 5),
@@ -86,8 +89,8 @@ class ItemClient extends GetView<ClientController> {
                           action: () async {
                             if (await controller.updateClient()) {
                               await controller.getAll();
+                              Get.back();
                             }
-                            Get.back();
                           },
                           padding: 10,
                         ),

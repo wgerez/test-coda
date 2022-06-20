@@ -16,4 +16,14 @@ class ClientRepositoryImpl implements ClientRepository {
   Future<bool> update(ClientRequestModel client) {
     return clientClient.update(client);
   }
+
+  @override
+  Future<bool> create(NewClientRequestModel client) {
+    return clientClient.create(client);
+  }
+
+  @override
+  Future<bool> remove(int id) {
+    return clientClient.remove(id);
+  }
 }
