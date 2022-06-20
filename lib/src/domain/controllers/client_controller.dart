@@ -11,15 +11,22 @@ class ClientController extends GetxController {
   final formUpdateKey = GlobalKey<FormState>();
   final formNewKey = GlobalKey<FormState>();
   final listClients = <ClientModel>[].obs;
+  final _listClients = <ClientModel>[].obs;
   RxBool loading = false.obs;
   RxBool loadingUpdate = false.obs;
 
   String idClientUpdate = '';
   String addressClientUpdate = '';
+  int idRemove = 0;
 
   String get getIdClientUpdate => idClientUpdate;
   set setIdClientUpdate(String id) {
     idClientUpdate = id;
+  }
+
+  int get idToRemove => idRemove;
+  set idToRemove(int id) {
+    idRemove = id;
   }
 
   set setAddressClientUpdate(String address) {
@@ -34,10 +41,22 @@ class ClientController extends GetxController {
   TextEditingController newLastNameController = TextEditingController();
   TextEditingController newEmailController = TextEditingController();
 
-  getAll() async {
+  void searchClient(String search) {
+    final clients = _listClients.where((client) {
+      return client.firstname!.toLowerCase().contains(search.toLowerCase()) ||
+          client.lastname!.toLowerCase().contains(search.toLowerCase()) ||
+          client.email!.toLowerCase().contains(search.toLowerCase());
+    }).toList();
+    listClients.value =
+        clients.isEmpty && search.isEmpty ? _listClients : clients;
+    listClients.refresh();
+  }
+
+  Future<void> getAll() async {
     loading(true);
     final clients = await clientRepository.getAll();
     listClients.assignAll(clients);
+    _listClients.assignAll(clients);
     listClients.refresh();
     loading(false);
   }
@@ -45,9 +64,9 @@ class ClientController extends GetxController {
   Future<bool> newClient() async {
     if (formNewKey.currentState!.validate()) {
       final client = NewClientRequestModel(
-        firstname: newFirstNameController.text,
-        lastname: newLastNameController.text,
-        email: newEmailController.text,
+        firstname: newFirstNameController.text.capitalize!,
+        lastname: newLastNameController.text.capitalize!,
+        email: newEmailController.text.toLowerCase(),
         address: '',
         photo: '',
         caption: '',
@@ -67,9 +86,9 @@ class ClientController extends GetxController {
       update();
       final client = ClientRequestModel(
         id: idClientUpdate.toString(),
-        firstname: firstNameController.text,
-        lastname: lastNameController.text,
-        email: emailController.text,
+        firstname: firstNameController.text.capitalize!,
+        lastname: lastNameController.text.capitalize!,
+        email: emailController.text.toLowerCase(),
         address: addressClientUpdate,
         photo: '',
         caption: '',

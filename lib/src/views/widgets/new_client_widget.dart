@@ -41,7 +41,7 @@ class NewClientWidget extends GetView<ClientController> {
                           radius: 30,
                           backgroundColor: Colors.white,
                           child: Image.asset(
-                            'assets/images/profiles/profile1_3x.png',
+                            'assets/images/profiles/upload.png',
                           ),
                         ),
                       ),

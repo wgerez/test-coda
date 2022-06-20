@@ -62,7 +62,7 @@ class LoginPage extends GetView<AuthController> {
                               ? Icons.visibility
                               : Icons.visibility_off),
                         ),
-                        labelText: 'Mail',
+                        labelText: 'email'.tr,
                       ),
                       validator: controller.validateEmail,
                     ),
@@ -79,7 +79,7 @@ class LoginPage extends GetView<AuthController> {
                               ? Icons.visibility
                               : Icons.visibility_off),
                         ),
-                        labelText: 'Password',
+                        labelText: 'password'.tr,
                       ),
                       validator: controller.validatePassword,
                     ),

@@ -15,21 +15,21 @@ class AuthController extends GetxController {
   TextEditingController passwordController = TextEditingController();
 
   final isEmailObscure = false.obs;
-  final isPassObscure = false.obs;
+  final isPassObscure = true.obs;
 
   final _authUser = AuthModel().obs;
   get authUser => _authUser.value;
 
   String? validateEmail(String? mail) {
     if (mail != null && !GetUtils.isEmail(mail)) {
-      return 'Mail is required';
+      return 'mail_required'.tr;
     }
     return null;
   }
 
   String? validatePassword(String? password) {
     if (password != null && password.isEmpty) {
-      return 'Password is required';
+      return 'password_required';
     }
     return null;
   }
@@ -63,6 +63,12 @@ class AuthController extends GetxController {
         Get.toNamed(Routes.listClients);
       },
     );
+  }
+
+  logout() {
+    final box = GetStorage();
+    box.remove('token');
+    Get.offAllNamed(Routes.loginPage);
   }
 
   callLogin() {

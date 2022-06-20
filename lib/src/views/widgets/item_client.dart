@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
-import 'package:test/src/core/system_logger.dart';
 import 'package:test/src/data/models/client_model.dart';
 import 'package:test/src/domain/controllers/client_controller.dart';
 import 'package:test/src/views/widgets/minimal_button.dart';
@@ -61,11 +60,57 @@ class ItemClient extends GetView<ClientController> {
               overlayColor: Colors.black,
               children: [
                 SpeedDialChild(
-                    child: const Icon(Icons.delete),
-                    onTap: () async {
-                      await controller.removeClient(client.id!);
-                      await controller.getAll();
-                    }),
+                  child: const Icon(Icons.delete),
+                  onTap: () async {
+                    await Get.defaultDialog(
+                      titlePadding: const EdgeInsets.all(0),
+                      contentPadding: const EdgeInsets.all(0),
+                      title: '',
+                      content: Column(
+                        children: [
+                          const SizedBox(height: 10),
+                          const Center(
+                            child: Text('Delete client?'),
+                          ),
+                          const SizedBox(height: 10),
+                          Container(
+                            width: double.infinity,
+                            color: Colors.yellow[50],
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 35,
+                                vertical: 10,
+                              ),
+                              child: Text(
+                                'Are you sure you want to delete ${client.firstname} ${client.lastname}?',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      confirm: SizedBox(
+                        width: 150,
+                        child: MinimalButton(
+                          text: 'DELETE',
+                          action: () async {
+                            if (await controller.removeClient(client.id!)) {
+                              await controller.getAll();
+                              Get.back();
+                            }
+                          },
+                          padding: 10,
+                        ),
+                      ),
+                      cancel: TextButton(
+                        onPressed: () => Get.back(),
+                        child: Text(
+                          'Cancel',
+                          style: TextStyle(color: Colors.grey[500]),
+                        ),
+                      ),
+                    );
+                  },
+                ),
                 SpeedDialChild(
                   child: const Icon(Icons.edit),
                   onTap: () async {
