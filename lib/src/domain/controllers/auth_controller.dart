@@ -29,7 +29,7 @@ class AuthController extends GetxController {
 
   String? validatePassword(String? password) {
     if (password != null && password.isEmpty) {
-      return 'password_required';
+      return 'password_required'.tr;
     }
     return null;
   }
@@ -60,7 +60,7 @@ class AuthController extends GetxController {
         _authUser.value = r;
         final box = GetStorage();
         box.write('token', r.response!.accessToken);
-        Get.toNamed(Routes.listClients);
+        Get.offNamed(Routes.listClients);
       },
     );
   }
